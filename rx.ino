@@ -5,6 +5,7 @@ char ssid[] = "NEVER GONNA GIVE YOU UP 2.4";
 char pass[] = "60029454";
 int status = WL_IDLE_STATUS;
 WiFiServer server(80); // Create a server on port 80
+char status = "0";
 
 void setup() {
   Serial.begin(9600);
@@ -44,16 +45,38 @@ void loop() {
         char c = client.read();
         Serial.write(c);
 
-        if (c == '1') {
+        if (c == '4') {
+          digitalWrite(2, HIGH);
+          delay(1000);
+          digitalWrite(3, LOW);
+          delay(1000);
+          status = '4';
+        } else if (c == '3') {
+          digitalWrite(2, HIGH);
+          digitalWrite(3, LOW);
+          status = '3';
+        } else if (c == '2') {
+          digitalWrite(2, LOW);
+          digitalWrite(3, HIGH);
+          status = '2';
+        } else if (c == '1') {
           digitalWrite(2, HIGH);
           digitalWrite(3, HIGH);
+          status = '1';
         } else if (c == '0') {
           digitalWrite(2, LOW);
           digitalWrite(3, LOW);
+          status = '0';
         }
       }
     }
     client.stop();
     Serial.println("Client disconnected");
+  }
+  if (status == '4' ){
+    digitalWrite(2, HIGH);
+    delay(1000);
+    digitalWrite(3, LOW);
+    delay(1000);
   }
 }
