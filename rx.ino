@@ -10,7 +10,7 @@ void setup() {
   Serial.begin(9600);
   while (!Serial);
 
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(1, OUTPUT);
 
   while (status != WL_CONNECTED) {
     Serial.print("Attempting to connect to network: ");
@@ -32,19 +32,17 @@ void loop() {
     Serial.println("New client connected");
     while (client.connected()) {
       if (client.available()) {
-        char c = client.read(); // Read data from the client
-        Serial.write(c); // Send data to the serial monitor
+        char c = client.read();
+        Serial.write(c);
 
-        // You can process the received data here
-        // For example, you can toggle the LED based on received data
         if (c == '1') {
-          digitalWrite(LED_BUILTIN, HIGH);
+          digitalWrite(1, HIGH);
         } else if (c == '0') {
-          digitalWrite(LED_BUILTIN, LOW);
+          digitalWrite(1, LOW);
         }
       }
     }
-    client.stop(); // Close the connection
+    client.stop();
     Serial.println("Client disconnected");
   }
 }
