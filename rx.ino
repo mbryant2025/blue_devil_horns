@@ -10,7 +10,14 @@ void setup() {
   Serial.begin(9600);
   while (!Serial);
 
-  pinMode(1, OUTPUT);
+  pinMode(2, OUTPUT);
+  digitalWrite(2, LOW);
+
+  pinMode(3, OUTPUT);
+  digitalWrite(3, LOW);
+
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH);
 
   while (status != WL_CONNECTED) {
     Serial.print("Attempting to connect to network: ");
@@ -21,6 +28,8 @@ void setup() {
 
   Serial.println("You're connected to the network");
   Serial.println("---------------------------------------");
+
+  digitalWrite(LED_BUILTIN, LOW);
 
   server.begin(); // Start the server
 }
@@ -36,9 +45,11 @@ void loop() {
         Serial.write(c);
 
         if (c == '1') {
-          digitalWrite(1, HIGH);
+          digitalWrite(2, HIGH);
+          digitalWrite(3, HIGH);
         } else if (c == '0') {
-          digitalWrite(1, LOW);
+          digitalWrite(2, LOW);
+          digitalWrite(3, LOW);
         }
       }
     }
